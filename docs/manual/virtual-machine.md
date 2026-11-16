@@ -138,5 +138,5 @@ Retina screen: [Troubleshooting](troubleshooting.md#apps-look-too-large-or-too-s
 ## Building it from your checkout
 
 To work on Herald OS Linux itself, the development virtual machine builds it from your checkout; the
-[README](../../README.md#herald-os-linux-in-a-virtual-machine) and [docs/LINUX.md](../LINUX.md) have
+[README](../UPSTREAM_README.md#herald-os-linux-in-a-virtual-machine) and [docs/LINUX.md](../LINUX.md) have
 the steps.

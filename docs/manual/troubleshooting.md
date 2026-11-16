@@ -1,6 +1,6 @@
 # Troubleshooting
 
-The [README](../../README.md#troubleshooting) covers installation problems. This page is for when
+The [README](../UPSTREAM_README.md#troubleshooting) covers installation problems. This page is for when
 Herald OS is running but something misbehaves.
 
 ## Hermes

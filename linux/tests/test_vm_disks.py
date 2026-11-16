@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 VM = ROOT / "linux" / "vm"
 PACKAGE = VM / "package-disk.sh"
 WORKFLOW = ROOT / ".github" / "workflows" / "image.yml"
-README = ROOT / "README.md"
+README = ROOT / "docs" / "UPSTREAM_README.md"  # upstream README; the root README is the Windows port's
 
 _LOADER = importlib.machinery.SourceFileLoader("herald_os_make_utm", str(VM / "make-utm.py"))
 utm = importlib.util.module_from_spec(importlib.util.spec_from_loader("herald_os_make_utm", _LOADER))

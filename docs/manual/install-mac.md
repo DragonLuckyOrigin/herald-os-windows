@@ -50,7 +50,7 @@ macOS asks for permissions the first time a feature needs them, not all at once:
 voice and dictation, Screen Recording for asking about the screen and screenshots, Accessibility and
 Automation for typing into other apps and quitting apps, Calendars for today's events, Local Network
 for a model server on your network, and Files and Folders for your Desktop, Documents and Downloads.
-The [README](../../README.md#macos) lists what each one is for. You can change them later in System
+The [README](../UPSTREAM_README.md#macos) lists what each one is for. You can change them later in System
 Settings > Privacy & Security.
 
 ## Updating

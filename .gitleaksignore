@@ -9,3 +9,8 @@ e86f00fb724cbf9d2b0ac0a3d06e779a7a6de3a9:apps/desktop/shared/locales/en.ts:gener
 e86f00fb724cbf9d2b0ac0a3d06e779a7a6de3a9:apps/desktop/shared/locales/de-DE.ts:generic-api-key:2085
 # Test fixture tokenFingerprint '0123456789abcdef' in the frozen V3 coexist test; a placeholder, not a credential.
 e3aeb543f2d9d6a8873199a0048a6841181a20c0:apps/desktop/electron/backend/coexist.test.ts:generic-api-key:26
+# The same three hand-checked findings in the public repository's initial commit (verified 2026-11-16):
+# the coexist test fixture tokenFingerprint and the UI keys ui.f8cd92419718 and ui.353f1747258c.
+7bd193fcfab076b5d2f3d5de7c16a3918b7fcaaa:apps/desktop/electron/backend/coexist.test.ts:generic-api-key:26
+7bd193fcfab076b5d2f3d5de7c16a3918b7fcaaa:apps/desktop/shared/locales/de-DE.ts:generic-api-key:3638
+7bd193fcfab076b5d2f3d5de7c16a3918b7fcaaa:apps/desktop/shared/locales/en.ts:generic-api-key:2973
