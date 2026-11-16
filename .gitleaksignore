@@ -1,0 +1,11 @@
+# Findings checked by hand and known not to be credentials.
+# A keyboard shortcut in a Herald Slides menu item.
+cf060c446d79180f748b8aac563b463f54edbcf9:apps/desktop/src/features/office/slides/SlidesWindow.tsx:generic-api-key:177
+# The same Present shortcut in the DOM slide editor on office/slides-basic.
+e8b6c1cded213c0690fef8c0bf7e00e67ffa879b:apps/desktop/src/features/office/slides/SlidesWindow.tsx:generic-api-key:58
+# Historical UI key ui.353f1747258c after ordinary sign-in explanatory text.
+e86f00fb724cbf9d2b0ac0a3d06e779a7a6de3a9:apps/desktop/shared/locales/en.ts:generic-api-key:1420
+# Historical UI key ui.f8cd92419718 after ordinary trash-operation display text.
+e86f00fb724cbf9d2b0ac0a3d06e779a7a6de3a9:apps/desktop/shared/locales/de-DE.ts:generic-api-key:2085
+# Test fixture tokenFingerprint '0123456789abcdef' in the frozen V3 coexist test; a placeholder, not a credential.
+e3aeb543f2d9d6a8873199a0048a6841181a20c0:apps/desktop/electron/backend/coexist.test.ts:generic-api-key:26

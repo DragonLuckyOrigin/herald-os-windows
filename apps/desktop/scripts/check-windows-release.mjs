@@ -1,0 +1,46 @@
+// Build admission, not an updater or a claim of installed Windows acceptance.
+import assert from 'node:assert/strict'
+import fs from 'node:fs'
+import { createRequire } from 'node:module'
+import { fileURLToPath } from 'node:url'
+
+const require = createRequire(import.meta.url)
+const desktop = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'))
+const root = JSON.parse(fs.readFileSync(new URL('../../../package.json', import.meta.url), 'utf8'))
+const lock = JSON.parse(fs.readFileSync(new URL('../../../package-lock.json', import.meta.url), 'utf8'))
+const { getConfig, validateConfiguration } = require('app-builder-lib/out/util/config/config.js')
+const { DebugLogger } = require('builder-util')
+const { UUID } = require('builder-util-runtime')
+const config = await getConfig(fileURLToPath(new URL('..', import.meta.url)), 'build/windows.cjs')
+await validateConfiguration(config, new DebugLogger(false))
+
+assert.match(desktop.version, /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/)
+assert.equal(root.version, desktop.version)
+assert.equal(lock.version, desktop.version)
+assert.equal(lock.packages[''].version, desktop.version)
+assert.equal(lock.packages['apps/desktop'].version, desktop.version)
+assert.equal(config.appId, 'dev.iamluke.heraldos')
+assert.equal(config.productName, 'Herald OS')
+assert.equal(config.executableName, 'Herald OS')
+assert.equal(config.copyright, 'Copyright (c) 2026 Luke The Dev (@iamlukethedev). Windows port by Dragon Lucky Eagle Origin.')
+assert.equal(config.win.signExecutable, false)
+assert.equal(config.win.icon, 'build/icon.png')
+assert.equal(config.nsis.installerIcon, undefined)
+assert.equal(config.nsis.uninstallerIcon, undefined)
+assert.equal(config.extraMetadata.name, 'herald-os')
+assert.equal(config.extraMetadata.productName, 'Herald OS')
+assert.equal(config.publish, null)
+assert.equal(config.nsis.oneClick, true)
+assert.equal(config.nsis.perMachine, false)
+assert.equal(config.nsis.runAfterFinish, false)
+assert.equal(config.nsis.deleteAppDataOnUninstall, false)
+assert.equal(config.nsis.shortcutName, 'Herald OS')
+assert.equal(config.nsis.include, 'build/windows-installer.nsh')
+assert.ok(fs.statSync(new URL('../build/windows-installer.nsh', import.meta.url)).isFile())
+assert.equal(config.nsis.artifactName, 'HeraldOS-${version}-win-${arch}-Setup.${ext}')
+assert.equal(config.protocols, undefined)
+assert.equal(config.nsis.guid, undefined, 'Keep the appId-derived NSIS GUID stable')
+assert.equal(UUID.v5(config.appId, UUID.parse('50e065bc-3134-11e6-9bab-38c9862bdaf3')).toString(), 'afe9ae19-7ffe-5f2a-b54d-29b163bae2d3')
+assert.ok(!process.env.GITHUB_REF?.startsWith('refs/tags/'), 'Herald tagged publication is not authorized; destination and version require separate approval.')
+
+console.log(JSON.stringify({ check: 'windows-release-configuration', result: 'PASS', version: desktop.version, appId: config.appId }))

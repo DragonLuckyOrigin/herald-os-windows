@@ -1,0 +1,48 @@
+import { t as uiT } from '../../store/i18n.ts'
+// Local speech recognition tuning. Hermes's default local model ("base") mishears short commands
+// ("open Herod app", "www.openhello.pdf"); "small.en" with a Herald OS vocabulary prompt gets them right
+// at roughly 0.8 s per utterance on a laptop CPU. See docs/VOICE.md.
+
+export const RECOMMENDED_LOCAL_MODEL = 'small.en'
+
+export const LOCAL_STT_MODELS = [
+  { id: 'base', get label() { return uiT("ui.268eb2f21c78") } },
+  { id: 'small.en', get label() { return uiT("ui.40682cbea070") } },
+  { id: 'small', get label() { return uiT("ui.39f9cd633333") } },
+  { id: 'medium.en', get label() { return uiT("ui.c1048076e9ca") } },
+  { id: 'large-v3-turbo', get label() { return uiT("ui.50bf4d03d30c") } }
+] as const
+
+/** Words Whisper should expect: page names, command verbs and file words. */
+export const STT_VOCABULARY =
+  'Herald OS voice commands: hey Hermes, open Apps, Missions, Memory, Files, Automations, Connections, Settings, Terminal, System, Overview. ' +
+  'Open hello.pdf, open the Downloads folder, type, paste, copy, select all, minimize, maximize, close window.'
+
+export interface LocalSttConfig {
+  stt?: { provider?: string; local?: { model?: string; initial_prompt?: string } }
+}
+
+/**
+ * The config patch that tunes local transcription, or null when there is nothing to do: another
+ * provider is configured, or the user already picked a model or wrote their own prompt.
+ */
+export function sttTuningPatch(config: LocalSttConfig): { stt: { local: Record<string, string> } } | null {
+  const provider = config.stt?.provider ?? 'local'
+
+  if (provider !== 'local') {
+    return null
+  }
+
+  const local = config.stt?.local ?? {}
+  const patch: Record<string, string> = {}
+
+  if (!local.model || local.model === 'base') {
+    patch.model = RECOMMENDED_LOCAL_MODEL
+  }
+
+  if (!local.initial_prompt?.trim()) {
+    patch.initial_prompt = STT_VOCABULARY
+  }
+
+  return Object.keys(patch).length ? { stt: { local: patch } } : null
+}

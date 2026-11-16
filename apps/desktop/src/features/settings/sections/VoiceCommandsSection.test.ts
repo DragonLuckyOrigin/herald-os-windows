@@ -1,0 +1,41 @@
+import { createElement } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { expect, it, vi } from 'vitest'
+vi.hoisted(() => Object.assign(globalThis, { window: { heraldOS: {} }, document: { documentElement: { dataset: {}, style: { setProperty() {}, removeProperty() {} } } } }))
+const { $prefs } = await import('../../../store/backend.ts')
+const { VoiceCommandsSection, exampleFor } = await import('./VoiceCommandsSection.tsx')
+const { defineCommands, listCommands, resetCommands } = await import('../../../store/os-commands.ts')
+const { navigationCommands } = await import('../../../commands/navigation.ts')
+const { openCommands } = await import('../../../commands/open.ts')
+
+it('does not present untranslated phrases as German examples', () => {
+  $prefs.set({ ...$prefs.get(), language: 'de-DE' })
+  const html = renderToStaticMarkup(createElement(VoiceCommandsSection))
+  expect(html.includes('Fragt zuerst')).toBe(true)
+  expect(html.includes('ohne Tokens')).toBe(true)
+  expect(exampleFor({ id: 'test', title: 'Test', phrases: ['open settings'], description: '', tier: 'read' } as never)).toBeNull()
+})
+
+it('shows supported German examples and preserves the executable registry across locale changes', () => {
+  resetCommands()
+  defineCommands([...navigationCommands, ...openCommands])
+  const before = listCommands({ includeHidden: true })
+  $prefs.set({ ...$prefs.get(), language: 'de-DE' })
+  const german = renderToStaticMarkup(createElement(VoiceCommandsSection))
+  expect(german).toContain('Seite oder App öffnen')
+  expect(german).toContain('Sprachbefehle anzeigen')
+  expect(german).toContain('zeige die Sprachbefehle')
+  expect(exampleFor(before.find(c => c.id === 'open.any')!)).toBe('öffne Missionen')
+  $prefs.set({ ...$prefs.get(), language: 'en' })
+  const english = renderToStaticMarkup(createElement(VoiceCommandsSection))
+  expect(english).toContain('Open a page or app')
+  expect(exampleFor(before.find(c => c.id === 'open.any')!)).toBe('open missions')
+  const identity = (commands: typeof before) => commands.map(c => [c.id, c.tier, c.phrases, c.args.map(a => [a.name, a.type, a.required, a.enum])])
+  expect(identity(listCommands({ includeHidden: true }))).toEqual(identity(before))
+  expect(english).not.toContain('zeige die Sprachbefehle')
+  $prefs.set({ ...$prefs.get(), language: 'de-DE' })
+  expect(renderToStaticMarkup(createElement(VoiceCommandsSection))).toBe(german)
+  expect(german).not.toContain('Which page is open')
+  expect(german).not.toContain('show hermes')
+  resetCommands()
+})
