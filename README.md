@@ -28,12 +28,12 @@ This is an independent community port. It is not an official release of the upst
 
 ## Install
 
-1. Download `HeraldOS-0.1.5-win-x64-Setup.exe` and `HeraldOS-0.1.5-win-x64-Setup.exe.sha256` from the release.
+1. Download `HeraldOS-0.1.6-win-x64-Setup.exe` and `HeraldOS-0.1.6-win-x64-Setup.exe.sha256` from the release.
 2. Check the hash in PowerShell:
    ```powershell
-   (Get-FileHash .\HeraldOS-0.1.5-win-x64-Setup.exe -Algorithm SHA256).Hash
+   (Get-FileHash .\HeraldOS-0.1.6-win-x64-Setup.exe -Algorithm SHA256).Hash
    ```
-   It must equal `9DEC330B9E70A8C8B35731ADB0168C837DDFF4EF7DC203D0EFD7018DE20B4AB9`.
+   It must equal the hash in the `.sha256` file and in the release notes.
 3. Quit Herald OS if it is running. The installer stops rather than closing the app for you.
 4. Run the installer. It installs per user and does not need administrator rights.
 

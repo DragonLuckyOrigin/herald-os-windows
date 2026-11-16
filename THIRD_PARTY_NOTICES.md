@@ -1,4 +1,4 @@
-# Third-Party Notices — Herald OS for Windows 0.1.5
+# Third-Party Notices — Herald OS for Windows 0.1.6
 
 Herald OS is MIT-licensed, Copyright (c) 2026 Luke The Dev (@iamlukethedev). The Windows port and German localization are by Dragon Lucky Eagle Origin. Herald OS runs on Hermes Agent by Nous Research (MIT), which is installed separately and is not bundled.
 

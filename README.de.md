@@ -28,12 +28,12 @@ Dies ist eine unabhängige Community-Portierung und keine offizielle Version des
 
 ## Installation
 
-1. Lade `HeraldOS-0.1.5-win-x64-Setup.exe` und `HeraldOS-0.1.5-win-x64-Setup.exe.sha256` aus dem Release herunter.
+1. Lade `HeraldOS-0.1.6-win-x64-Setup.exe` und `HeraldOS-0.1.6-win-x64-Setup.exe.sha256` aus dem Release herunter.
 2. Prüfe die Prüfsumme in PowerShell:
    ```powershell
-   (Get-FileHash .\HeraldOS-0.1.5-win-x64-Setup.exe -Algorithm SHA256).Hash
+   (Get-FileHash .\HeraldOS-0.1.6-win-x64-Setup.exe -Algorithm SHA256).Hash
    ```
-   Das Ergebnis muss `9DEC330B9E70A8C8B35731ADB0168C837DDFF4EF7DC203D0EFD7018DE20B4AB9` lauten.
+   Das Ergebnis muss dem Wert in der `.sha256`-Datei und in den Release-Notes entsprechen.
 3. Beende Herald OS, falls es läuft. Das Setup schließt die App nicht selbst, sondern bricht ab.
 4. Starte das Setup. Es installiert pro Benutzer und braucht keine Administratorrechte.
 
